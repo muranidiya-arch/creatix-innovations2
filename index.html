@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creatix Innovation - Powering Digital Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary-dark: #0a192f;
+            --secondary-dark: #112240;
+            --tech-blue: #64ffda;
+            --text-light: #e6f1ff;
+            --text-gray: #8892b0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .tech-text {
+            color: var(--tech-blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--tech-blue);
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: var(--tech-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-filled {
+            background-color: var(--tech-blue);
+            color: var(--primary-dark);
+        }
+
+        .btn-filled:hover {
+            background-color: #4cdbb9;
+            transform: translateY(-3px);
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text-light);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--tech-blue);
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            color: var(--tech-blue);
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.7)), url('hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-family: 'Poppins', sans-serif;
+            color: var(--tech-blue);
+            font-size: 16px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: 60px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+
+        /* --- SERVICES PREVIEW --- */
+        .services-preview {
+            background-color: var(--primary-dark);
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--tech-blue);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--secondary-dark);
+            padding: 30px;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--tech-blue);
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            /* Placeholder for icon image */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .service-icon img {
+            width: 100%;
+            height: auto;
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            font-size: 15px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 60px 0 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--tech-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* --- WHATSAPP FLOAT --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 40px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--secondary-dark);
+                flex-direction: column;
+                padding: 50px;
+                transition: var(--transition);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="creatix-logo.png" alt="Creatix Logo">
+                    <span>CREATIX</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-subtitle">WELCOME TO CREATIX INNOVATION</p>
+                <h1 class="hero-title">Powering Digital <span class="tech-text">Excellence</span></h1>
+                <p class="hero-desc">Digital Marketing | Development | Design | Enterprise Systems | Automation. We build the future of your business.</p>
+                <div class="hero-btns">
+                    <a href="contact.html" class="btn btn-filled">Get a Quote</a>
+                    <a href="services.html" class="btn btn-primary">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT PREVIEW -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Who We Are</h2>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="color: var(--text-gray); font-size: 18px; margin-bottom: 30px;">
+                    Creatix Innovation is a full-stack IT & Digital agency based in Jaipur. We provide cutting-edge services in Digital Marketing, Website Development, App Development, and Enterprise Solutions like HRMS, POS, CRM, and ERP.
+                </p>
+                <a href="about.html" class="btn btn-primary">Learn More About Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES PREVIEW -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Expertise</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-marketing.png" alt="Marketing">
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-development.png" alt="Development">
+                    </div>
+                    <h3>Web & App Dev</h3>
+                    <p>Custom websites and mobile applications built with modern technologies.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-design.png" alt="Design">
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>User-centric design that creates engaging digital experiences.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-enterprise.png" alt="Enterprise">
+                    </div>
+                    <h3>Enterprise Systems</h3>
+                    <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-block;">
+                        <img src="creatix-logo.png" alt="Creatix Logo">
+                        <span>CREATIX</span>
+                    </a>
+                    <p style="color: var(--text-gray); font-size: 14px;">
+                        Powering Digital Excellence. Your partner in digital transformation and innovation.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Web Development</a></li>
+                        <li><a href="services.html">App Development</a></li>
+                        <li><a href="services.html">Digital Marketing</a></li>
+                        <li><a href="services.html">ERP Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li style="color: var(--text-gray);">Jaipur, India</li>
+                        <li><a href="tel:+918000184324">+91 80001 84324</a></li>
+                        <li><a href="mailto:info@creatixinnovation.com">info@creatixinnovation.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Creatix Innovation. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/918000184324" class="whatsapp-float" target="_blank">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="white"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.968.585 2.032.896 3.072.896 3.179 0 5.764-2.587 5.763-5.766.001-3.18-2.585-5.762-5.764-5.762zm3.99 7.945c-.166.476-.971.897-1.329.954-.358.057-.823.14-2.93-.77-2.517-1.088-4.131-4.184-4.258-4.377-.127-.193-1.015-1.353-.97-2.57.045-1.217.634-1.81.862-2.056.229-.246.496-.307.662-.307.166 0 .333.005.479.012.158.007.369-.06.575.436.215.515.736 1.797.802 1.929.065.132.109.288.016.476-.093.188-.14.305-.279.467-.14.161-.293.359-.419.48-.141.135-.288.283-.124.567.163.285.727 1.198 1.564 1.943 1.086.966 2.002 1.268 2.29 1.412.288.144.454.125.624-.064.17-.19.736-.854.932-1.146.196-.293.391-.244.656-.146.265.097 1.689.796 1.98 942.291.146.485.243.638.36.153.117.153.684.065 1.129-.432 1.293z"/></svg>
+    </a>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Scroll Animation
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.background = 'rgba(10, 25, 47, 0.95)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.background = 'rgba(10, 25, 47, 0.85)';
+            }
+        });
+    </script>
+</body>
+</html>

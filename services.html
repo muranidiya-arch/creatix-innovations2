@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Creatix Innovation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary-dark: #0a192f;
+            --secondary-dark: #112240;
+            --tech-blue: #64ffda;
+            --text-light: #e6f1ff;
+            --text-gray: #8892b0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .tech-text {
+            color: var(--tech-blue);
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text-light);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--tech-blue);
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            color: var(--tech-blue);
+            cursor: pointer;
+        }
+
+        /* --- PAGE HERO --- */
+        .page-hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.8)), url('hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* --- SERVICES GRID --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--secondary-dark);
+            padding: 40px;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--tech-blue);
+            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
+            background: rgba(17, 34, 64, 0.8);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            padding: 15px;
+        }
+
+        .service-icon img {
+            width: 100%;
+            height: auto;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .service-card p {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-link {
+            margin-top: auto;
+            color: var(--tech-blue);
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .service-link:hover {
+            gap: 10px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 60px 0 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--tech-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* --- WHATSAPP FLOAT --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--secondary-dark);
+                flex-direction: column;
+                padding: 50px;
+                transition: var(--transition);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="creatix-logo.png" alt="Creatix Logo">
+                    <span>CREATIX</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html" class="active">Services</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Our <span class="tech-text">Services</span></h1>
+            <p style="max-width: 600px; margin: 0 auto; color: var(--text-gray);">Comprehensive digital solutions
+                tailored to your business needs.</p>
+        </div>
+    </section>
+
+    <!-- SERVICES GRID -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="services-grid">
+                <!-- 1. Digital Marketing -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-marketing.png" alt="Digital Marketing">
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <p>SEO, PPC, Social Media Marketing, and Content Strategy to grow your brand online.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 2. Website Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-development.png" alt="Website Development">
+                    </div>
+                    <h3>Website Development</h3>
+                    <p>Custom, responsive, and high-performance websites built with the latest technologies.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 3. App Development -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-development.png" alt="App Development">
+                    </div>
+                    <h3>App Development</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 4. Video Editing -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-design.png" alt="Video Editing">
+                    </div>
+                    <h3>Video Editing</h3>
+                    <p>Professional video editing and motion graphics for your marketing campaigns.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 5. UI/UX Design -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-design.png" alt="UI/UX Design">
+                    </div>
+                    <h3>UI / UX Design</h3>
+                    <p>User-centered design that ensures a seamless and engaging experience.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 6. HRMS System -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-enterprise.png" alt="HRMS">
+                    </div>
+                    <h3>HRMS System</h3>
+                    <p>Complete Human Resource Management Systems to streamline your workforce.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 7. POS System -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-enterprise.png" alt="POS">
+                    </div>
+                    <h3>POS System</h3>
+                    <p>Point of Sale systems for retail and hospitality businesses.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 8. CRM System -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-enterprise.png" alt="CRM">
+                    </div>
+                    <h3>CRM System</h3>
+                    <p>Customer Relationship Management tools to boost sales and retention.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+
+                <!-- 9. ERP Solutions -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="service-enterprise.png" alt="ERP">
+                    </div>
+                    <h3>ERP Solutions</h3>
+                    <p>Enterprise Resource Planning software to integrate all your business processes.</p>
+                    <a href="contact.html" class="service-link">Get Quote →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-block;">
+                        <img src="creatix-logo.png" alt="Creatix Logo">
+                        <span>CREATIX</span>
+                    </a>
+                    <p style="color: var(--text-gray); font-size: 14px;">
+                        Powering Digital Excellence. Your partner in digital transformation and innovation.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html">Web Development</a></li>
+                        <li><a href="services.html">App Development</a></li>
+                        <li><a href="services.html">Digital Marketing</a></li>
+                        <li><a href="services.html">ERP Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li style="color: var(--text-gray);">Jaipur, India</li>
+                        <li><a href="tel:+918000184324">+91 80001 84324</a></li>
+                        <li><a href="mailto:info@creatixinnovation.com">info@creatixinnovation.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Creatix Innovation. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/918000184324" class="whatsapp-float" target="_blank">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
+            <path
+                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.968.585 2.032.896 3.072.896 3.179 0 5.764-2.587 5.763-5.766.001-3.18-2.585-5.762-5.764-5.762zm3.99 7.945c-.166.476-.971.897-1.329.954-.358.057-.823.14-2.93-.77-2.517-1.088-4.131-4.184-4.258-4.377-.127-.193-1.015-1.353-.97-2.57.045-1.217.634-1.81.862-2.056.229-.246.496-.307.662-.307.166 0 .333.005.479.012.158.007.369-.06.575.436.215.515.736 1.797.802 1.929.065.132.109.288.016.476-.093.188-.14.305-.279.467-.14.161-.293.359-.419.48-.141.135-.288.283-.124.567.163.285.727 1.198 1.564 1.943 1.086.966 2.002 1.268 2.29 1.412.288.144.454.125.624-.064.17-.19.736-.854.932-1.146.196-.293.391-.244.656-.146.265.097 1.689.796 1.98 942.291.146.485.243.638.36.153.117.153.684.065 1.129-.432 1.293z" />
+        </svg>
+    </a>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.background = 'rgba(10, 25, 47, 0.95)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.background = 'rgba(10, 25, 47, 0.85)';
+            }
+        });
+    </script>
+</body>
+
+</html>
