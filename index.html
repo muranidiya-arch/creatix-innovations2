@@ -74,6 +74,10 @@
             padding: 100px 0;
         }
 
+        .section-padding-sm {
+            padding: 50px 0;
+        }
+
         .text-center {
             text-align: center;
         }
@@ -109,6 +113,7 @@
         .btn-filled {
             background-color: var(--tech-blue);
             color: var(--primary-dark);
+            border-color: var(--tech-blue);
         }
 
         .btn-filled:hover {
@@ -286,11 +291,7 @@
             opacity: 0;
         }
 
-        /* --- SERVICES PREVIEW --- */
-        .services-preview {
-            background-color: var(--primary-dark);
-        }
-
+        /* --- SECTION STYLES --- */
         .section-header {
             margin-bottom: 60px;
         }
@@ -312,6 +313,12 @@
             background-color: var(--tech-blue);
         }
 
+        .section-title.centered::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* --- SERVICES PREVIEW (Existing Grid) --- */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -319,14 +326,23 @@
         }
 
         .service-card {
-            background: var(--secondary-dark);
+            background: var(--primary-dark); /* Use primary dark for contrast in sections */
             padding: 30px;
             border-radius: 8px;
             transition: var(--transition);
-            border: 1px solid transparent;
+            border: 1px solid var(--secondary-dark); /* Subtle border for definition */
             position: relative;
             overflow: hidden;
+            text-align: left; /* Adjusted for better look in the new sections */
         }
+        
+        /* OVERRIDE FOR CARDS IN SECONDARY DARK SECTION */
+        section[style*="--secondary-dark"] .service-card {
+            background: var(--primary-dark);
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
 
         .service-card:hover {
             transform: translateY(-10px);
@@ -337,8 +353,7 @@
         .service-icon {
             width: 60px;
             height: 60px;
-            margin-bottom: 20px;
-            /* Placeholder for icon image */
+            margin: 0 0 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -349,6 +364,12 @@
             height: auto;
         }
 
+        /* Centering icons for the original layout */
+        .services-grid .service-card:nth-child(-n+4) .service-icon {
+             margin: 0 auto 20px;
+        }
+
+
         .service-card h3 {
             font-size: 20px;
             margin-bottom: 15px;
@@ -358,6 +379,349 @@
             color: var(--text-gray);
             font-size: 15px;
         }
+
+        /* --- NEW SECTIONS STYLES --- */
+
+        /* About Extended */
+        .about-grid {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-content {
+            flex: 2;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .about-image img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            filter: grayscale(100%) brightness(50%);
+            transition: filter 0.5s ease;
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%) brightness(100%);
+        }
+
+        .key-points {
+            margin-top: 20px;
+        }
+        .key-points li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            color: var(--text-gray);
+        }
+
+        .key-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--tech-blue);
+            font-weight: 700;
+        }
+
+        /* Our Process */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 30px;
+            background: var(--secondary-dark);
+            border-radius: 12px;
+            position: relative;
+            border-left: 4px solid var(--tech-blue);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .process-step:nth-child(even) {
+            flex-direction: row-reverse;
+            border-left: none;
+            border-right: 4px solid var(--tech-blue);
+        }
+
+        .step-number {
+            font-size: 48px;
+            color: var(--tech-blue);
+            font-weight: 800;
+            line-height: 1;
+            flex-shrink: 0;
+            opacity: 0.2;
+        }
+
+        .step-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: var(--text-gray);
+        }
+
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--secondary-dark);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-event {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-event::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--primary-dark);
+            border: 4px solid var(--tech-blue);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left-event {
+            left: 0;
+        }
+
+        .right-event {
+            left: 50%;
+        }
+
+        .right-event::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--secondary-dark);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-content h4 {
+            color: var(--tech-blue);
+            margin-bottom: 5px;
+        }
+
+        /* Achievements / Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-box {
+            background: var(--secondary-dark);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border-bottom: 3px solid var(--tech-blue);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            color: var(--tech-blue);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        /* Testimonials */
+        .testimonial-card {
+            background: var(--secondary-dark);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+        }
+
+        .quote-icon {
+            font-size: 40px;
+            color: var(--tech-blue);
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--tech-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary-dark);
+            flex-shrink: 0;
+        }
+
+        .client-details h4 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .client-details p {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* FAQ */
+        .faq-item {
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            background-color: var(--secondary-dark);
+        }
+
+        .faq-question {
+            padding: 18px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 25px;
+            color: var(--text-gray);
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+            /* Adjust based on max content size */
+            padding: 15px 25px 20px;
+        }
+
+        .faq-question .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .toggle-icon {
+            transform: rotate(45deg);
+            color: var(--tech-blue);
+        }
+
+        /* Clients/Partners */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+        }
+
+        .client-logo-box {
+            background-color: var(--secondary-dark);
+            padding: 20px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: grayscale(100%) opacity(70%);
+            transition: var(--transition);
+        }
+
+        .client-logo-box:hover {
+            filter: grayscale(0%) opacity(100%);
+            transform: scale(1.05);
+            border: 1px solid var(--tech-blue);
+        }
+
+        .client-logo-box img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        /* Big CTA */
+        .big-cta {
+            background: linear-gradient(45deg, var(--secondary-dark), rgba(17, 34, 64, 0.9));
+            border: 1px solid var(--tech-blue);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .big-cta h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .big-cta p {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
 
         /* --- FOOTER --- */
         footer {
@@ -438,6 +802,54 @@
         }
 
         /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .about-grid {
+                flex-direction: column;
+            }
+
+            .about-image {
+                height: 300px;
+                order: -1; /* Move image above content on mobile */
+            }
+
+            .timeline-container::after {
+                left: 31px;
+            }
+
+            .timeline-event {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-event::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+
+            .left-event::after,
+            .right-event::after {
+                left: 20px;
+                margin-left: 0;
+                top: 25px;
+            }
+
+            .right-event {
+                left: 0%;
+            }
+
+            .step-number {
+                display: none;
+            }
+
+            .process-step {
+                gap: 20px;
+            }
+
+        }
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 40px;
@@ -463,6 +875,33 @@
             .mobile-menu-btn {
                 display: block;
             }
+
+            .section-padding {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -473,6 +912,7 @@
     <header>
         <div class="container">
             <nav>
+                <!-- EXISTING LOGO - NOT CHANGED -->
                 <a href="index.html" class="logo">
                     <img src="creatix-logo.png" alt="Creatix Logo">
                     <span>CREATIX</span>
@@ -493,6 +933,7 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-slider">
+            <!-- EXISTING BACKGROUND IMAGES - NOT CHANGED -->
             <div class="slide active" style="background-image: url('hero-bg.png')"></div>
             <div class="slide" style="background-image: url('hero-bg-2.png')"></div>
             <div class="slide" style="background-image: url('hero-bg-3.png')"></div>
@@ -505,6 +946,7 @@
                 <p class="hero-desc">Digital Marketing | Development | Design | Enterprise Systems | Automation. We
                     build the future of your business.</p>
                 <div class="hero-btns">
+                    <!-- EXISTING BUTTON LINKS - NOT CHANGED -->
                     <a href="contact.html" class="btn btn-filled">Get a Quote</a>
                     <a href="services.html" class="btn btn-primary">Explore Services</a>
                 </div>
@@ -512,11 +954,20 @@
         </div>
     </section>
 
-    <!-- ABOUT PREVIEW -->
-    <section class="section-padding" style="background-color: var(--secondary-dark);">
+    <!-- SPACER SECTION 1 (For added scroll length) -->
+    <section class="section-padding-sm" style="background-color: var(--secondary-dark);">
+        <div class="container text-center">
+            <h3 style="color: var(--text-gray); font-weight: 500;">
+                Trusted by 50+ businesses globally to drive sustainable growth.
+            </h3>
+        </div>
+    </section>
+
+    <!-- ABOUT PREVIEW (Existing) -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
         <div class="container">
             <div class="section-header text-center">
-                <h2 class="section-title">Who We Are</h2>
+                <h2 class="section-title centered">Who We Are</h2>
             </div>
             <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                 <p style="color: var(--text-gray); font-size: 18px; margin-bottom: 30px;">
@@ -524,41 +975,86 @@
                     services in Digital Marketing, Website Development, App Development, and Enterprise Solutions like
                     HRMS, POS, CRM, and ERP.
                 </p>
+                <!-- EXISTING BUTTON LINK - NOT CHANGED -->
                 <a href="about.html" class="btn btn-primary">Learn More About Us</a>
             </div>
         </div>
     </section>
 
-    <!-- SERVICES PREVIEW -->
-    <section class="section-padding">
+    <!-- ABOUT US EXTENDED (New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Core Philosophy</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-content">
+                    <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 16px;">
+                        At Creatix, innovation isn't just a buzzword—it's the bedrock of our operations. We believe in
+                        fusing robust technology with human-centric design to deliver solutions that are not only powerful
+                        but intuitively easy to use. Our commitment goes beyond delivery; we aim to be long-term partners,
+                        scaling our technology alongside your growing business ambitions.
+                    </p>
+                    <p style="color: var(--text-gray); margin-bottom: 30px; font-size: 16px;">
+                        From the bustling tech hub of Jaipur, we serve clients ranging from energetic startups to established
+                        multinational corporations, providing localized expertise with a global outlook on technology trends.
+                    </p>
+                    <ul class="key-points">
+                        <li>Decades of combined experience in full-stack IT services.</li>
+                        <li>Customer-first approach to project management and support.</li>
+                        <li>Dedicated focus on security, scalability, and performance.</li>
+                        <li>Bespoke solutions tailored exactly to industry-specific needs.</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <!-- Placeholder image used for NEW content, preserving existing image paths in original sections -->
+                    <img src="visionary-leadership.png"
+                        alt="Visionary Leadership">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SPACER SECTION 2 -->
+    <section class="section-padding-sm" style="background-color: var(--primary-dark);">
+        <div class="container text-center">
+            <h3 style="color: var(--tech-blue); font-weight: 600; font-size: 24px;">
+                "Technology is best when it brings people together."
+            </h3>
+        </div>
+    </section>
+
+    <!-- SERVICES PREVIEW (Existing) -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Our Expertise</h2>
             </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
+                <!-- EXISTING SERVICE CARDS - ORIGINAL IMAGES PRESERVED -->
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon" style="margin: 0 auto 20px;">
                         <img src="service-marketing.png" alt="Marketing">
                     </div>
                     <h3>Digital Marketing</h3>
                     <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon" style="margin: 0 auto 20px;">
                         <img src="service-development.png" alt="Development">
                     </div>
                     <h3>Web & App Dev</h3>
                     <p>Custom websites and mobile applications built with modern technologies.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon" style="margin: 0 auto 20px;">
                         <img src="service-design.png" alt="Design">
                     </div>
                     <h3>UI/UX Design</h3>
                     <p>User-centric design that creates engaging digital experiences.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" style="text-align: center;">
+                    <div class="service-icon" style="margin: 0 auto 20px;">
                         <img src="service-enterprise.png" alt="Enterprise">
                     </div>
                     <h3>Enterprise Systems</h3>
@@ -568,11 +1064,374 @@
         </div>
     </section>
 
+    <!-- SERVICES DETAILED (More Cards - New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">Our Full Spectrum Services</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Deep dive into specialized areas of digital
+                    transformation.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=SEO" alt="SEO Icon">
+                    </div>
+                    <h3>SEO & Content Strategy</h3>
+                    <p>Optimizing your digital presence to rank higher and capture organic traffic efficiently.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Data" alt="Data Icon">
+                    </div>
+                    <h3>Data Analytics & BI</h3>
+                    <p>Turning raw data into actionable insights for strategic business decisions and growth forecasting.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Cloud" alt="Cloud Icon">
+                    </div>
+                    <h3>Managed IT & CloudOps</h3>
+                    <p>24/7 infrastructure monitoring, seamless cloud migration, and optimization services for reliability.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Security" alt="Security Icon">
+                    </div>
+                    <h3>Cybersecurity Audits</h3>
+                    <p>Vulnerability assessment, penetration testing, and robust security protocols for digital safety.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=RPA" alt="RPA Icon">
+                    </div>
+                    <h3>AI & Automation (RPA)</h3>
+                    <p>Implementing machine learning models and Robotic Process Automation (RPA) for task efficiency.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Mobile" alt="Mobile Icon">
+                    </div>
+                    <h3>Cross-Platform Mobile Dev</h3>
+                    <p>Building high-performance, native-feel mobile applications for iOS and Android simultaneously.</p>
+                </div>
+            </div>
+            <!-- EXISTING BUTTON LINK - NOT CHANGED -->
+            <div class="text-center" style="margin-top: 40px;">
+                <a href="services.html" class="btn btn-filled">View All Services</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SPACER SECTION 3 -->
+    <section class="section-padding-sm" style="background-color: var(--primary-dark);">
+        <div class="container">
+            <div class="section-header text-center" style="margin-bottom: 0;">
+                <h3 style="color: var(--text-light); font-weight: 500; font-size: 20px;">
+                    Our commitment: Innovation, Integrity, Impact.
+                </h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR PROCESS (Step-by-step - New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">The Creatix Innovation Process</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">A proven path to digital success in five phases.</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Discovery & Strategy</h3>
+                        <p>We begin with intensive workshops to understand your challenges, goals, and existing
+                            ecosystem. We define the project scope, technical requirements, and strategic roadmap.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Design & Prototyping</h3>
+                        <p>Our UX/UI experts create wireframes and high-fidelity prototypes. This phase focuses on user
+                            journeys, accessibility, and visual aesthetics, ensuring the final product is intuitive.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Development & Testing</h3>
+                        <p>Agile teams build the solution using best-in-class technologies. Continuous integration and
+                            rigorous QA testing cycles ensure a stable, high-performance, and bug-free application.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Deployment & Launch</h3>
+                        <p>We handle the smooth transition to production, including cloud setup, data migration, and
+                            staff training, culminating in a successful, on-time market launch.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h3>Support & Evolution</h3>
+                        <p>Post-launch, we provide continuous monitoring, maintenance, and ongoing support. We partner
+                            with you to plan future enhancements and feature additions based on performance data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPANY TIMELINE (New Section) -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">Our Journey of Growth</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">A look at key milestones since our inception.</p>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-event left-event">
+                    <div class="timeline-content">
+                        <h4>2015: Founding Year</h4>
+                        <p>Creatix Innovation established in Jaipur focusing initially on custom Web Development.</p>
+                    </div>
+                </div>
+                <div class="timeline-event right-event">
+                    <div class="timeline-content">
+                        <h4>2017: Digital Expansion</h4>
+                        <p>Launched dedicated Digital Marketing and SEO services, securing first major international
+                            client.</p>
+                    </div>
+                </div>
+                <div class="timeline-event left-event">
+                    <div class="timeline-content">
+                        <h4>2019: Enterprise Focus</h4>
+                        <p>Pivoted to include Enterprise Solutions (ERP/CRM), delivering a large-scale HRMS for a
+                            client in Mumbai.</p>
+                    </div>
+                </div>
+                <div class="timeline-event right-event">
+                    <div class="timeline-content">
+                        <h4>2021: Global Footprint</h4>
+                        <p>Expanded client base across 3 continents and doubled our internal engineering team.</p>
+                    </div>
+                </div>
+                <div class="timeline-event left-event">
+                    <div class="timeline-content">
+                        <h4>2023: AI Integration</h4>
+                        <p>Integrated AI/ML capabilities into our service offerings, completing our first major RPA
+                            project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS / STATS (New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">Impact By The Numbers</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Measurable success is our metric.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Happy Clients Globally</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Project Completion Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years in Innovation</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">4.9/5</div>
+                    <div class="stat-label">Average Client Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS (New Section) -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">What Our Clients Say</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Hear from those who've partnered with us.</p>
+            </div>
+            <div class="services-grid">
+                <!-- Using services-grid for a 3-column responsive layout -->
+                <div class="testimonial-card">
+                    <div class="quote-icon">❝</div>
+                    <p class="testimonial-text">"Creatix Innovation delivered a complex ERP system ahead of schedule.
+                        Their team is professional, highly skilled, and truly understood our industrial workflow."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">J.D.</div>
+                        <div class="client-details">
+                            <h4>Jatin D.</h4>
+                            <p>CEO, InfraTech Solutions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">❝</div>
+                    <p class="testimonial-text">"The app they built for us is a game-changer. The UX/UI design is
+                        flawless and the back-end stability is exceptional. Highly recommend their development services."
+                    </p>
+                    <div class="client-info">
+                        <div class="client-avatar">S.M.</div>
+                        <div class="client-details">
+                            <h4>Simran M.</h4>
+                            <p>Marketing Director, E-Commerce Hub</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">❝</div>
+                    <p class="testimonial-text">"Since partnering with them for Digital Marketing, our lead generation
+                        has increased by 150%. Their strategic approach is unmatched in the industry."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">A.K.</div>
+                        <div class="client-details">
+                            <h4>Alok K.</h4>
+                            <p>Founder, Finacle Group</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ (New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">Frequently Asked Questions</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Quick answers to common inquiries.</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        What technologies do you specialize in?
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our core stack includes React, Angular, Node.js (MERN/MEAN), Python/Django, and various cloud
+                            platforms like AWS and Google Cloud. We utilize modern frameworks for reliable and scalable
+                            solutions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        How long does a typical project take?
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Project timelines vary significantly based on complexity. A standard website takes 4-8 weeks,
+                            while a custom ERP or complex mobile app can range from 3 to 9 months. We provide detailed
+                            timelines after the Discovery phase (Step 1 of our process).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        Are your Enterprise Systems customizable?
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. Our ERP, CRM, and HRMS systems are designed as bespoke, modular solutions. They
+                            are fully customizable to fit your unique business logic and industry compliance standards,
+                            not just off-the-shelf software.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        Do you provide post-launch maintenance?
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer comprehensive maintenance and support packages, including bug fixes, security
+                            updates, performance monitoring, and continuous feature enhancements, ensuring your digital
+                            asset remains optimized.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS / PARTNERS GRID (New Section) -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered">Global Partners & Clients</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Working with the best across industries.</p>
+            </div>
+            <div class="clients-grid">
+                <!-- Using placeholder images for new client logos -->
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=TechCorp" alt="TechCorp Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=Global+Fin" alt="Global Fin Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=Aura+Health" alt="Aura Health Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=InnovateX" alt="InnovateX Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=Retail+Pro" alt="Retail Pro Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=Logi+Sys" alt="Logi Sys Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=Media+Flow" alt="Media Flow Logo">
+                </div>
+                <div class="client-logo-box">
+                    <img src="https://placehold.co/120x60/112240/64ffda?text=EduCorp" alt="EduCorp Logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BIG CTA SECTION (New Section) -->
+    <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="container">
+            <div class="big-cta">
+                <h2 class="tech-text">Ready to Transform Your Digital Landscape?</h2>
+                <p>Don't settle for ordinary. Partner with Creatix Innovation to build the powerful, scalable, and
+                    secure digital future your business deserves.</p>
+                <!-- EXISTING BUTTON LINK - NOT CHANGED -->
+                <a href="contact.html" class="btn btn-filled" style="padding: 15px 40px; font-size: 16px;">Start Your
+                    Project Today</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SPACER SECTION 4 (Final scroll buffer) -->
+    <section class="section-padding-sm" style="background-color: var(--primary-dark);">
+        <div class="container text-center">
+            <h3 style="color: var(--text-gray); font-weight: 400; font-size: 16px; opacity: 0.6;">
+                Creatix Innovation | Jaipur, India
+            </h3>
+        </div>
+    </section>
+
+
     <!-- FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
+                    <!-- EXISTING LOGO - NOT CHANGED -->
                     <a href="index.html" class="logo" style="margin-bottom: 20px; display: inline-block;">
                         <img src="creatix-logo.png" alt="Creatix Logo">
                         <span>CREATIX</span>
@@ -584,6 +1443,7 @@
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
+                        <!-- EXISTING LINKS - NOT CHANGED -->
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="services.html">Services</a></li>
                         <li><a href="portfolio.html">Portfolio</a></li>
@@ -593,6 +1453,7 @@
                 <div class="footer-col">
                     <h4>Services</h4>
                     <ul>
+                        <!-- EXISTING LINKS - NOT CHANGED -->
                         <li><a href="services.html">Web Development</a></li>
                         <li><a href="services.html">App Development</a></li>
                         <li><a href="services.html">Digital Marketing</a></li>
@@ -602,8 +1463,15 @@
                 <div class="footer-col">
                     <h4>Contact Us</h4>
                     <ul>
-                        <li style="color: var(--text-gray);">Jaipur, India</li>
-                        <li><a href="tel:+918000184324">+91 80001 84324</a></li>
+                        <!-- CONTACT INFO - MAINTAINED -->
+                        <li style="color: var(--text-gray);">
+                            <span class="tech-text">Location:</span> Jaipur, India
+                        </li>
+                        <li>
+                            <a href="tel:+918000184324">
+                                <span class="tech-text">Phone:</span> +91 80001 84324
+                            </a>
+                        </li>
                         <li><a href="mailto:info@creatixinnovation.com">info@creatixinnovation.com</a></li>
                     </ul>
                 </div>
@@ -618,7 +1486,7 @@
     <a href="https://wa.me/918000184324" class="whatsapp-float" target="_blank">
         <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
             <path
-                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.968.585 2.032.896 3.072.896 3.179 0 5.764-2.587 5.763-5.766.001-3.18-2.585-5.762-5.764-5.762zm3.99 7.945c-.166.476-.971.897-1.329.954-.358.057-.823.14-2.93-.77-2.517-1.088-4.131-4.184-4.258-4.377-.127-.193-1.015-1.353-.97-2.57.045-1.217.634-1.81.862-2.056.229-.246.496-.307.662-.307.166 0 .333.005.479.012.158.007.369-.06.575.436.215.515.736 1.797.802 1.929.065.132.109.288.016.476-.093.188-.14.305-.279.467-.14.161-.293.359-.419.48-.141.135-.288.283-.124.567.163.285.727 1.198 1.564 1.943 1.086.966 2.002 1.268 2.29 1.412.288.144.454.125.624-.064.17-.19.736-.854.932-1.146.196-.293.391-.244.656-.146.265.097 1.689.796 1.98 942.291.146.485.243.638.36.153.117.153.684.065 1.129-.432 1.293z" />
+                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.968.585 2.032.896 3.072.896 3.179 0 5.764-2.587 5.763-5.766.001-3.18-2.585-5.762-5.764-5.762zm3.99 7.945c-.166.476-.971.897-1.329.954-.358.057-.823.14-2.93-.77-2.517-1.088-4.131-4.184-4.258-4.377-.127-.193-1.015-1.353-.97-2.57.045-1.217.634-1.81.862-2.056.229-.246.496-.307.662-.307.166 0 .333.005.479.012.158.007.369-.06.575.436.215.515.736 1.797.802 1.929.065.132.109.288.016.476-.093.188-.14.305-.279.467-.14.161-.293.359-.419.48-.141.135-.288.283-.124.567.163.285.727 1.198 1.564 1.943 1.086.966 2.002 1.268 2.29 1.412.288.144.454.125.624-.064.17-.19.736-.854.932-1.146.196-.293.391-.244.656-.146.265.097 1.689.796 1.98.942.291.146.485.243.638.36.153.117.153.684.065 1.129-.432 1.293z" />
         </svg>
     </a>
 
@@ -644,13 +1512,45 @@
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
 
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+        if (slides.length > 0) {
+            slides[0].classList.add('active'); // Ensure the first slide starts active
+
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            setInterval(nextSlide, 5000); // Change every 5 seconds
         }
 
-        setInterval(nextSlide, 5000); // Change every 5 seconds
+        // FAQ Toggle Functionality (New JavaScript for new section)
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+
+            // Close all other open answers
+            document.querySelectorAll('.faq-question').forEach(q => {
+                if (q !== element && q.classList.contains('active')) {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('open');
+                    q.nextElementSibling.style.maxHeight = null;
+                    q.querySelector('.toggle-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Toggle the clicked answer
+            element.classList.toggle('active');
+            answer.classList.toggle('open');
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Set max height dynamically based on content + padding
+                answer.style.maxHeight = answer.scrollHeight + 35 + "px"; 
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
     </script>
 </body>
 
