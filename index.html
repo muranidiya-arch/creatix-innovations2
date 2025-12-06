@@ -554,11 +554,16 @@
             content: '';
             position: absolute;
             width: 4px;
-            background-color: var(--secondary-dark);
+            background-color: var(--tech-blue);
+            /* Bright Blue */
+            box-shadow: 0 0 15px var(--tech-blue);
+            /* Glow */
             top: 0;
-            bottom: 0;
             left: 50%;
             margin-left: -2px;
+            /* height is controlled by JS now, removing default or setting to 0% effectively */
+            height: 0%;
+            transition: height 0.1s linear;
         }
 
         .timeline-event {
@@ -1395,12 +1400,89 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        .retro-switch.active .switch-lever {
-            transform: translateY(-15px);
-            /* UP (On) position */
-            background: #64ffda;
-            /* Tech blue hint when on */
-            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5);
+        /* --- LIVING TIMELINE --- */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--tech-blue);
+            /* Make it bright blue */
+            box-shadow: 0 0 15px var(--tech-blue);
+            /* Add glow */
+            top: 0;
+            left: 50%;
+            margin-left: -2px;
+            height: 0%;
+            /* Start empty */
+            transition: height 0.1s linear;
+            /* Smooth growth */
+            z-index: 0;
+        }
+
+        /* --- TRON GRID BACKGROUND --- */
+        .retro-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            perspective: 500px;
+            /* Creates 3D depth */
+            opacity: 0.15;
+            /* Keep it subtle */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .retro-grid::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(var(--tech-blue) 1px, transparent 1px),
+                linear-gradient(90deg, var(--tech-blue) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(45deg);
+            /* Tilts the floor */
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: rotateX(45deg) translateY(0);
+            }
+
+            100% {
+                transform: rotateX(45deg) translateY(50px);
+            }
+        }
+
+        /* --- CLICK PARTICLE EXPLOSION --- */
+        .click-particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--tech-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: explode 0.8s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--mx), var(--my));
+                opacity: 0;
+            }
         }
 
         /* Screws for realism */
@@ -1488,7 +1570,7 @@
         <div id="dim-overlay"></div>
         <div class="container">
             <div class="hero-content">
-                <p class="hero-subtitle">WELCOME TO CREATIX INNOVATION</p>
+                <p class="hero-subtitle" id="typewriter-text"></p>
                 <h1 class="hero-title">Powering Digital <span class="tech-text">Excellence</span></h1>
                 <p class="hero-desc">Digital Marketing | Development | Design | Enterprise Systems | Automation. We
                     build the future of your business.</p>
@@ -1525,6 +1607,7 @@
     </section>
 
     <section class="section-padding" style="background-color: var(--secondary-dark);">
+        <div class="retro-grid"></div>
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Our Core Philosophy</h2>
@@ -2334,6 +2417,88 @@
                 switchControl.classList.remove('active'); // Flicks switch DOWN
             }
         }
+        // --- LIVING TIMELINE (SCROLL DRAW) ---
+        window.addEventListener('scroll', () => {
+            const timeline = document.querySelector('.timeline-container');
+            // We'll update the style using a dynamic stylesheet approach or by finding a way to set the variable.
+            // Since pseudo-elements can't be styled directly via inline styles, we'll use a specific allocated style tag.
+
+            if (timeline) {
+                const rect = timeline.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                let percentage = 0;
+
+                // Start drawing when the top of timeline hits the middle of screen
+                if (rect.top < windowHeight / 2) {
+                    const height = timeline.offsetHeight;
+                    const scrolled = (windowHeight / 2) - rect.top;
+                    percentage = (scrolled / height) * 100;
+                }
+
+                percentage = Math.max(0, Math.min(percentage, 100));
+
+                let dynamicStyle = document.getElementById('timeline-dynamic-style');
+                if (!dynamicStyle) {
+                    dynamicStyle = document.createElement('style');
+                    dynamicStyle.id = 'timeline-dynamic-style';
+                    document.head.appendChild(dynamicStyle);
+                }
+                dynamicStyle.innerText = `.timeline-container::after { height: ${percentage}% !important; }`;
+            }
+        });
+
+        // --- TYPEWRITER EFFECT ---
+        const textToType = "WELCOME TO CREATIX INNOVATION_";
+        const typeElement = document.getElementById('typewriter-text');
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typeElement.innerHTML += textToType.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                // Blink cursor
+                setInterval(() => {
+                    if (typeElement.innerHTML.endsWith('_')) {
+                        typeElement.innerHTML = typeElement.innerHTML.slice(0, -1);
+                    } else {
+                        typeElement.innerHTML += '_';
+                    }
+                }, 500);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
+        // --- CLICK PARTICLE EXPLOSION ---
+        window.addEventListener('click', (e) => {
+            // Don't trigger on interactive elements to avoid visual clutter? (Optional, but user asked for "wherever they click")
+            // complying with "wherever they click".
+
+            const amount = 8;
+            for (let i = 0; i < amount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('click-particle');
+
+                particle.style.left = e.clientX + 'px';
+                particle.style.top = e.clientY + 'px';
+
+                const x = (Math.random() - 0.5) * 100 + 'px';
+                const y = (Math.random() - 0.5) * 100 + 'px';
+
+                particle.style.setProperty('--mx', x);
+                particle.style.setProperty('--my', y);
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 800);
+            }
+        });
     </script>
 </body>
 
