@@ -1253,6 +1253,177 @@
             }
         }
 
+        /* --- LAMP CONTAINER & WIRE --- */
+        .lamp-container {
+            position: absolute;
+            top: -20px;
+            /* Start slightly off screen */
+            left: 50%;
+            /* Center it */
+            transform: translateX(-50%);
+            z-index: 5;
+            transform-origin: top center;
+            animation: swing 3s ease-in-out infinite alternate;
+        }
+
+        .wire {
+            width: 2px;
+            height: 150px;
+            /* Length of the wire */
+            background: #555;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .bulb-holder {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            margin: 0 auto;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            /* Connector to wire */
+        }
+
+        /* --- THE BULB --- */
+        .bulb {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            /* Glass look when off */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Inner shadow when off */
+        }
+
+        /* --- FILAMENT (Detail) --- */
+        .filament {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-bottom: none;
+            border-radius: 50% 50% 0 0;
+            margin: 10px auto;
+        }
+
+        /* --- SWING ANIMATION --- */
+        @keyframes swing {
+            0% {
+                transform: translateX(-50%) rotate(3deg);
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(-3deg);
+            }
+        }
+
+        /* --- LIGHT ON STATE --- */
+        .bulb.on {
+            background: #fff;
+            border-color: #fff;
+            /* The Glow Effect - Cyan + White */
+            box-shadow:
+                0 0 20px #fff,
+                0 0 50px #fff,
+                0 0 100px var(--tech-blue),
+                0 0 200px var(--tech-blue);
+        }
+
+        .bulb.on .filament {
+            border-color: #fff;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        /* --- THE DIM OVERLAY --- */
+        /* Makes the page darker so the light pops */
+        #dim-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            /* Darkens the hero */
+            z-index: 1;
+            pointer-events: none;
+            /* Allows clicking through */
+            transition: opacity 0.5s ease;
+        }
+
+        #dim-overlay.light-active {
+            opacity: 0;
+            /* Clears the darkness when light is on */
+        }
+
+        /* --- RETRO SWITCH --- */
+        .retro-switch {
+            position: absolute;
+            top: 50px;
+            /* Near the bulb vertically */
+            left: 50%;
+            margin-left: 80px;
+            /* Offset to the right of the bulb */
+            width: 60px;
+            height: 90px;
+            background: #dcdcdc;
+            /* Beige/Grey plate */
+            border: 2px solid #999;
+            border-radius: 6px;
+            z-index: 10;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .switch-lever {
+            width: 16px;
+            height: 40px;
+            background: #333;
+            border-radius: 2px;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            /* Snap effect */
+            transform: translateY(15px);
+            /* DOWN (Off) position */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .retro-switch.active .switch-lever {
+            transform: translateY(-15px);
+            /* UP (On) position */
+            background: #64ffda;
+            /* Tech blue hint when on */
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Screws for realism */
+        .retro-switch::before,
+        .retro-switch::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #aaa;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .retro-switch::before {
+            top: 5px;
+        }
+
+        .retro-switch::after {
+            bottom: 5px;
+        }
+
         /* Ensure text stays on top */
         .hero-content {
             position: relative;
@@ -1301,6 +1472,20 @@
             <div class="shape shape-4"></div>
         </div>
         <div class="hero-overlay"></div>
+        <div class="lamp-container">
+            <div class="wire"></div>
+            <div class="bulb-holder">
+                <div class="bulb">
+                    <div class="filament"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="retro-switch" onclick="toggleLight()">
+            <div class="switch-lever"></div>
+        </div>
+
+        <div id="dim-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <p class="hero-subtitle">WELCOME TO CREATIX INNOVATION</p>
@@ -2126,6 +2311,29 @@
             "max-glare": 0.2,   // Opacity of the glare
             scale: 1.05         // Slightly zoom in
         });
+
+        // --- LIGHT BULB LOGIC ---
+        let isLightOn = false;
+
+        function toggleLight() {
+            const bulb = document.querySelector('.bulb');
+            const overlay = document.getElementById('dim-overlay');
+            const switchControl = document.querySelector('.retro-switch');
+
+            isLightOn = !isLightOn;
+
+            if (isLightOn) {
+                // TURN ON
+                bulb.classList.add('on');
+                overlay.classList.add('light-active'); // Removes the dark overlay
+                switchControl.classList.add('active'); // Flicks switch UP
+            } else {
+                // TURN OFF
+                bulb.classList.remove('on');
+                overlay.classList.remove('light-active'); // Brings back darkness
+                switchControl.classList.remove('active'); // Flicks switch DOWN
+            }
+        }
     </script>
 </body>
 
