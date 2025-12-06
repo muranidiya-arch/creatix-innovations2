@@ -8,6 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
@@ -200,17 +201,6 @@
             overflow: hidden;
         }
 
-        .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            display: none;
-            /* Hide slider to show video */
-        }
 
         /* --- VIDEO BACKGROUND --- */
         #bg-video {
@@ -225,6 +215,61 @@
             transform: translateX(-50%) translateY(-50%);
             object-fit: cover;
             filter: blur(10px);
+        }
+
+        /* --- MARQUEE ANIMATION --- */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            padding: 20px 0;
+            /* Add some padding for shadow etc */
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 30px;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+            /* Slower for better readability */
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Make cards shrink/grow properly in flex */
+        .marquee-track .service-card {
+            flex: 0 0 300px;
+            /* Fixed width for cards in marquee */
+            white-space: normal;
+            /* Allow text wrapping inside cards */
+        }
+
+        /* Reverse scroll for variety if needed, or just same */
+        .marquee-track.reverse {
+            animation: scroll-reverse 40s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes scroll-reverse {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
         }
 
         .slide {
@@ -884,7 +929,9 @@
                 right: -100%;
                 width: 70%;
                 height: 100vh;
-                background-color: var(--secondary-dark);
+                background-color: rgba(10, 25, 47, 0.95);
+                backdrop-filter: blur(10px);
+                /* Blurs the background behind menu */
                 flex-direction: column;
                 padding: 50px;
                 transition: var(--transition);
@@ -926,10 +973,37 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* --- CUSTOM CURSOR --- */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--tech-blue);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--tech-blue);
+            transition: width 0.2s, height 0.2s, top 0.1s, left 0.1s;
+        }
     </style>
 </head>
 
 <body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
     <video id="bg-video" autoplay muted loop playsinline>
         <source src="video.mp4" type="video/mp4">
     </video>
@@ -955,11 +1029,6 @@
     </header>
 
     <section class="hero">
-        <div class="hero-slider">
-            <div class="slide active" style="background-image: url('hero-bg.png')"></div>
-            <div class="slide" style="background-image: url('hero-bg-2.png')"></div>
-            <div class="slide" style="background-image: url('hero-bg-3.png')"></div>
-        </div>
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
@@ -1047,34 +1116,66 @@
             <div class="section-header">
                 <h2 class="section-title">Our Expertise</h2>
             </div>
-            <div class="services-grid">
-                <div class="service-card" style="text-align: center;">
-                    <div class="service-icon" style="margin: 0 auto 20px;">
-                        <img src="service-marketing.png" alt="Marketing">
+            <div class="marquee-container">
+                <div class="marquee-track reverse">
+                    <!-- Original Items -->
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-marketing.png" alt="Marketing">
+                        </div>
+                        <h3>Digital Marketing</h3>
+                        <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
                     </div>
-                    <h3>Digital Marketing</h3>
-                    <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
-                </div>
-                <div class="service-card" style="text-align: center;">
-                    <div class="service-icon" style="margin: 0 auto 20px;">
-                        <img src="service-development.png" alt="Development">
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-development.png" alt="Development">
+                        </div>
+                        <h3>Web & App Dev</h3>
+                        <p>Custom websites and mobile applications built with modern technologies.</p>
                     </div>
-                    <h3>Web & App Dev</h3>
-                    <p>Custom websites and mobile applications built with modern technologies.</p>
-                </div>
-                <div class="service-card" style="text-align: center;">
-                    <div class="service-icon" style="margin: 0 auto 20px;">
-                        <img src="service-design.png" alt="Design">
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-design.png" alt="Design">
+                        </div>
+                        <h3>UI/UX Design</h3>
+                        <p>User-centric design that creates engaging digital experiences.</p>
                     </div>
-                    <h3>UI/UX Design</h3>
-                    <p>User-centric design that creates engaging digital experiences.</p>
-                </div>
-                <div class="service-card" style="text-align: center;">
-                    <div class="service-icon" style="margin: 0 auto 20px;">
-                        <img src="service-enterprise.png" alt="Enterprise">
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-enterprise.png" alt="Enterprise">
+                        </div>
+                        <h3>Enterprise Systems</h3>
+                        <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
                     </div>
-                    <h3>Enterprise Systems</h3>
-                    <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
+                    <!-- Duplicated Items -->
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-marketing.png" alt="Marketing">
+                        </div>
+                        <h3>Digital Marketing</h3>
+                        <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
+                    </div>
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-development.png" alt="Development">
+                        </div>
+                        <h3>Web & App Dev</h3>
+                        <p>Custom websites and mobile applications built with modern technologies.</p>
+                    </div>
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-design.png" alt="Design">
+                        </div>
+                        <h3>UI/UX Design</h3>
+                        <p>User-centric design that creates engaging digital experiences.</p>
+                    </div>
+                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-icon" style="margin: 0 auto 20px;">
+                            <img src="service-enterprise.png" alt="Enterprise">
+                        </div>
+                        <h3>Enterprise Systems</h3>
+                        <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1087,56 +1188,107 @@
                 <p style="color: var(--text-gray); margin-top: 15px;">Deep dive into specialized areas of digital
                     transformation.</p>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=SEO" alt="SEO Icon">
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <!-- Original Items -->
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=SEO" alt="SEO Icon">
+                        </div>
+                        <h3>SEO & Content Strategy</h3>
+                        <p>Optimizing your digital presence to rank higher and capture organic traffic efficiently.</p>
                     </div>
-                    <h3>SEO & Content Strategy</h3>
-                    <p>Optimizing your digital presence to rank higher and capture organic traffic efficiently.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Data" alt="Data Icon">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Data" alt="Data Icon">
+                        </div>
+                        <h3>Data Analytics & BI</h3>
+                        <p>Turning raw data into actionable insights for strategic business decisions and growth
+                            forecasting.</p>
                     </div>
-                    <h3>Data Analytics & BI</h3>
-                    <p>Turning raw data into actionable insights for strategic business decisions and growth
-                        forecasting.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Cloud" alt="Cloud Icon">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Cloud" alt="Cloud Icon">
+                        </div>
+                        <h3>Managed IT & CloudOps</h3>
+                        <p>24/7 infrastructure monitoring, seamless cloud migration, and optimization services for
+                            reliability.</p>
                     </div>
-                    <h3>Managed IT & CloudOps</h3>
-                    <p>24/7 infrastructure monitoring, seamless cloud migration, and optimization services for
-                        reliability.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Security" alt="Security Icon">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Security" alt="Security Icon">
+                        </div>
+                        <h3>Cybersecurity Audits</h3>
+                        <p>Vulnerability assessment, penetration testing, and robust security protocols for digital
+                            safety.</p>
                     </div>
-                    <h3>Cybersecurity Audits</h3>
-                    <p>Vulnerability assessment, penetration testing, and robust security protocols for digital safety.
-                    </p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=RPA" alt="RPA Icon">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=RPA" alt="RPA Icon">
+                        </div>
+                        <h3>AI & Automation (RPA)</h3>
+                        <p>Implementing machine learning models and Robotic Process Automation (RPA) for task
+                            efficiency.</p>
                     </div>
-                    <h3>AI & Automation (RPA)</h3>
-                    <p>Implementing machine learning models and Robotic Process Automation (RPA) for task efficiency.
-                    </p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <img src="https://placehold.co/60x60/0a192f/64ffda?text=Mobile" alt="Mobile Icon">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Mobile" alt="Mobile Icon">
+                        </div>
+                        <h3>Cross-Platform Mobile Dev</h3>
+                        <p>Building high-performance, native-feel mobile applications for iOS and Android
+                            simultaneously.</p>
                     </div>
-                    <h3>Cross-Platform Mobile Dev</h3>
-                    <p>Building high-performance, native-feel mobile applications for iOS and Android simultaneously.
-                    </p>
+                    <!-- Duplicated Items -->
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=SEO" alt="SEO Icon">
+                        </div>
+                        <h3>SEO & Content Strategy</h3>
+                        <p>Optimizing your digital presence to rank higher and capture organic traffic efficiently.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Data" alt="Data Icon">
+                        </div>
+                        <h3>Data Analytics & BI</h3>
+                        <p>Turning raw data into actionable insights for strategic business decisions and growth
+                            forecasting.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Cloud" alt="Cloud Icon">
+                        </div>
+                        <h3>Managed IT & CloudOps</h3>
+                        <p>24/7 infrastructure monitoring, seamless cloud migration, and optimization services for
+                            reliability.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Security" alt="Security Icon">
+                        </div>
+                        <h3>Cybersecurity Audits</h3>
+                        <p>Vulnerability assessment, penetration testing, and robust security protocols for digital
+                            safety.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=RPA" alt="RPA Icon">
+                        </div>
+                        <h3>AI & Automation (RPA)</h3>
+                        <p>Implementing machine learning models and Robotic Process Automation (RPA) for task
+                            efficiency.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="service-icon">
+                            <img src="https://placehold.co/60x60/0a192f/64ffda?text=Mobile" alt="Mobile Icon">
+                        </div>
+                        <h3>Cross-Platform Mobile Dev</h3>
+                        <p>Building high-performance, native-feel mobile applications for iOS and Android
+                            simultaneously.</p>
+                    </div>
                 </div>
             </div>
-		
+
 
             <div class="text-center" style="margin-top: 40px;">
                 <a href="services.html" class="btn btn-filled">View All Services</a>
@@ -1387,30 +1539,58 @@
                 <h2 class="section-title centered">Global Partners & Clients</h2>
                 <p style="color: var(--text-gray); margin-top: 15px;">Working with the best across industries.</p>
             </div>
-            <div class="clients-grid">
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=TechCorp" alt="TechCorp Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=Global+Fin" alt="Global Fin Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=Aura+Health" alt="Aura Health Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=InnovateX" alt="InnovateX Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=Retail+Pro" alt="Retail Pro Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=Logi+Sys" alt="Logi Sys Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=Media+Flow" alt="Media Flow Logo">
-                </div>
-                <div class="client-logo-box">
-                    <img src="https://placehold.co/120x60/112240/64ffda?text=EduCorp" alt="EduCorp Logo">
+            <div class="marquee-container">
+                <div class="marquee-track">
+                    <!-- Original Items -->
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=TechCorp" alt="TechCorp Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Global+Fin" alt="Global Fin Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Aura+Health" alt="Aura Health Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=InnovateX" alt="InnovateX Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Retail+Pro" alt="Retail Pro Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Logi+Sys" alt="Logi Sys Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Media+Flow" alt="Media Flow Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=EduCorp" alt="EduCorp Logo">
+                    </div>
+                    <!-- Duplicated Items -->
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=TechCorp" alt="TechCorp Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Global+Fin" alt="Global Fin Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Aura+Health" alt="Aura Health Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=InnovateX" alt="InnovateX Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Retail+Pro" alt="Retail Pro Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Logi+Sys" alt="Logi Sys Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=Media+Flow" alt="Media Flow Logo">
+                    </div>
+                    <div class="client-logo-box">
+                        <img src="https://placehold.co/120x60/112240/64ffda?text=EduCorp" alt="EduCorp Logo">
+                    </div>
                 </div>
             </div>
         </div>
@@ -1495,6 +1675,7 @@
         </svg>
     </a>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
@@ -1606,6 +1787,37 @@
         // Start observing all elements with class .stat-number
         document.querySelectorAll('.stat-number').forEach(counter => {
             counterObserver.observe(counter);
+        });
+
+        // --- AOS INIT ---
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // --- CUSTOM CURSOR ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Add a slight delay to the outline for a "trailing" effect
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // --- MOBILE NAV AUTO-CLOSE ---
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
         });
     </script>
 </body>
