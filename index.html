@@ -439,22 +439,26 @@
         /* --- SERVICES PREVIEW (Existing Grid) --- */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
+            justify-content: center;
+            /* Center grid items */
         }
 
+        /* Prevent cards from getting too wide on large screens */
         .service-card {
             background: var(--primary-dark);
-            /* Use primary dark for contrast in sections */
             padding: 30px;
             border-radius: 8px;
             transition: var(--transition);
             border: 1px solid var(--secondary-dark);
-            /* Subtle border for definition */
             position: relative;
             overflow: hidden;
             text-align: left;
-            /* Adjusted for better look in the new sections */
+            max-width: 400px;
+            /* Limit width */
+            margin: 0 auto;
+            /* Center if using max-width */
         }
 
         /* OVERRIDE FOR CARDS IN SECONDARY DARK SECTION */
@@ -2155,6 +2159,90 @@
             background: var(--tech-blue);
             color: var(--primary-dark);
         }
+
+        /* --- TIMELINE HORIZONTAL SCROLL CSS --- */
+        .timeline-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            cursor: grab;
+            padding-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Hide scrollbar for cleaner look */
+            position: relative;
+            z-index: 10;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .timeline-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .timeline-track {
+            display: inline-flex;
+            gap: 40px;
+            /* Spacing between cards */
+            padding: 10px 20px;
+        }
+
+        .timeline-card {
+            flex: 0 0 auto;
+            width: 320px;
+            /* Fixed width for consistency */
+            background: var(--primary-dark);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            white-space: normal;
+            /* Allow text to wrap inside card */
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--tech-blue);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .timeline-year {
+            font-size: 14px;
+            color: var(--tech-blue);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-drag-hint {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+            animation: bounceLeftRight 2s infinite;
+        }
+
+        @keyframes bounceLeftRight {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+        }
     </style>
 </head>
 
@@ -2248,17 +2336,17 @@
         <div class="container" style="position: relative; z-index: 2;">
             <div class="section-header text-center">
                 <h2 class="section-title centered" data-aos="fade-up">Who We Are</h2>
-                <p style="color: var(--text-gray); margin-top: 10px;" data-aos="fade-up" data-aos-delay="100">Story That
-                    Feels Alive</p>
+                <p style="color: var(--text-gray); margin-top: 10px;" data-aos="fade-up" data-aos-delay="100">Where
+                    Ideas Turn Into Innovation.</p>
             </div>
 
             <div style="max-width: 900px; margin: 0 auto; text-align: center;">
                 <p class="who-we-are-text" data-aos="fade-up" data-aos-delay="200">
-                    Creatix Innovation is a <span class="highlight-word">full-stack</span> IT & Digital agency based in
-                    <span class="highlight-word">Jaipur</span>.
-                    We provide <span class="highlight-word">cutting-edge</span> services in Digital Marketing, Website
-                    Development, App Development,
-                    and <span class="highlight-word">Enterprise Solutions</span> like HRMS, POS, CRM, and ERP.
+                    Creatix Innovation is not just a digital agency — it’s a team of creators, developers, and dreamers
+                    from Jaipur building digital magic for brands worldwide.<br><br>
+                    We design, develop, and deliver experiences that connect people with technology — from marketing
+                    campaigns to enterprise apps.<br><br>
+                    Because at Creatix, innovation never sleeps.
                 </p>
 
                 <!-- Animated Icons Grid -->
