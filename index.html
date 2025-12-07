@@ -9,6 +9,10 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
@@ -35,9 +39,41 @@
             color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
+            /* Hide scrollbar for cleaner look */
+            scrollbar-width: thin;
+            scrollbar-color: var(--tech-blue) var(--primary-dark);
+        }
+
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--tech-blue);
+            border-radius: 20px;
         }
 
         h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        /* Orbitron for Titles */
+        .hero-title,
+        .section-title {
+            font-family: 'Orbitron', sans-serif !important;
+        }
+
         h2,
         h3,
         h4,
@@ -155,6 +191,24 @@
         .logo img {
             height: 40px;
             width: auto;
+            animation: logoPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0% {
+                filter: drop-shadow(0 0 0px rgba(100, 255, 218, 0));
+                transform: scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px rgba(100, 255, 218, 0.6));
+                transform: scale(1.05);
+            }
+
+            100% {
+                filter: drop-shadow(0 0 0px rgba(100, 255, 218, 0));
+                transform: scale(1);
+            }
         }
 
         .nav-links {
@@ -311,7 +365,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.7));
+            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.8));
+            backdrop-filter: blur(8px);
             z-index: -1;
         }
 
@@ -1415,19 +1470,6 @@
             height: 0%;
             /* Start empty */
             transition: height 0.1s linear;
-            /* Smooth growth */
-            z-index: 0;
-        }
-
-        /* --- TRON GRID BACKGROUND --- */
-        .retro-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            perspective: 500px;
             /* Creates 3D depth */
             opacity: 0.15;
             /* Keep it subtle */
@@ -1506,10 +1548,612 @@
             bottom: 5px;
         }
 
+
+
+        /* --- WHO WE ARE STYLES --- */
+        .who-we-are-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('team-group.png');
+            /* Placeholder, fallback to existing or color */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+            animation: softZoom 20s infinite alternate linear;
+        }
+
+        /* If team-group.png doesn't exist, we fallback */
+        .who-we-are-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            opacity: 0.9;
+        }
+
+        @keyframes softZoom {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .who-we-are-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(10, 25, 47, 0.85) 0%, var(--primary-dark) 100%);
+            z-index: 1;
+        }
+
+        .who-we-are-text {
+            color: var(--text-gray);
+            font-size: 20px;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .highlight-word {
+            color: var(--text-light);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .highlight-word::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(100, 255, 218, 0.2);
+            z-index: -1;
+            transition: height 0.3s ease;
+        }
+
+        .highlight-word:hover::after {
+            height: 100%;
+            background: rgba(100, 255, 218, 0.4);
+        }
+
+        .highlight-word:hover {
+            color: var(--tech-blue);
+            transform: translateY(-2px);
+        }
+
+        .who-we-are-icons {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .wa-icon-box {
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .wa-icon-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .wa-icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(17, 34, 64, 0.8);
+            border: 1px solid var(--tech-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 15px;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+            transition: var(--transition);
+        }
+
+        .wa-icon-box:hover .wa-icon-circle {
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.6);
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(1.1);
+        }
+
+        .wa-icon-box h4 {
+            color: var(--text-light);
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+
+        /* --- PROCESS CONNECTING LINE --- */
+        .process-steps {
+            position: relative;
+        }
+
+        .process-connecting-line {
+            position: absolute;
+            top: 50px;
+            bottom: 50px;
+            left: 50%;
+            width: 4px;
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+
+        /* --- PHILOSOPHY CIRCUIT BG --- */
+        .philosophy-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .circuit-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 20% 30%, var(--tech-blue) 1px, transparent 2px),
+                radial-gradient(circle at 80% 70%, var(--tech-blue) 1px, transparent 2px);
+            background-size: 100px 100px;
+            animation: circuitPulse 4s infinite alternate;
+        }
+
+        .circuit-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(90deg, rgba(100, 255, 218, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(100, 255, 218, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        @keyframes circuitPulse {
+            0% {
+                opacity: 0.05;
+            }
+
+            100% {
+                opacity: 0.15;
+            }
+        }
+
+        .reveal-text {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote-highlight {
+            color: var(--text-light);
+            font-style: italic;
+            border-left: 3px solid var(--tech-blue);
+            padding-left: 15px;
+            margin: 20px 0;
+            font-size: 20px;
+        }
+
+
+        .process-line-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--tech-blue);
+            box-shadow: 0 0 10px var(--tech-blue);
+            transition: height 0.5s ease;
+        }
+
+        .process-step {
+            transition: all 0.5s ease;
+            opacity: 0.5;
+            filter: blur(2px);
+            z-index: 1;
+            /* Above line */
+        }
+
+        .process-step.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1.02);
+            border-color: var(--tech-blue);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+        }
+
+        .process-icon {
+            font-size: 30px;
+            margin-right: 15px;
+            animation: spinIcon 10s linear infinite;
+        }
+
+        @keyframes spinIcon {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-underline-glow::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--tech-blue), transparent);
+            box-shadow: 0 0 15px var(--tech-blue);
+            animation: underlineMove 3s infinite linear;
+            background-size: 200% 100%;
+        }
+
+        @keyframes underlineMove {
+            0% {
+                background-position: 100% 0;
+            }
+
+            100% {
+                background-position: -100% 0;
+            }
+        }
+
+        /* --- 3D HOLOGRAPHIC WAVE (SIMPLE CSS VERSION) --- */
+        /* Enhancing existing retro-grid with a 'wave' feel via opacity mask */
+        .retro-grid {
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0));
+        }
+
         /* Ensure text stays on top */
         .hero-content {
             position: relative;
             z-index: 2;
+        }
+
+        /* --- GLOBAL MAP STYLES --- */
+        .world-map-container {
+            position: relative;
+            max-width: 900px;
+            margin: 50px auto;
+            min-height: 450px;
+            background: url('world-map-dotted.png') no-repeat center center;
+            background-size: contain;
+            /* In a real project, use SVG or image. For now, we simulate hotspots. */
+        }
+
+        /* Fallback if image missing */
+        .world-map-container::after {
+            content: '🌐 Global Presence';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            opacity: 0.05;
+            color: var(--tech-blue);
+            z-index: -1;
+        }
+
+        .map-hotspot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--tech-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--tech-blue);
+            transition: all 0.3s ease;
+        }
+
+        .map-hotspot::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--tech-blue);
+            border-radius: 50%;
+            animation: hotspotPulse 2s infinite;
+        }
+
+        @keyframes hotspotPulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .map-tooltip {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(10, 25, 47, 0.9);
+            border: 1px solid var(--tech-blue);
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: #fff;
+            width: 150px;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .map-hotspot:hover .map-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Home Base */
+        .spot-aus {
+            top: 75%;
+            left: 85%;
+        }
+
+        /* --- PORTFOLIO SECTION --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 300px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(10, 25, 47, 0.95), transparent);
+            z-index: 2;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--tech-blue);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-item:hover .portfolio-video {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-cat {
+            font-size: 14px;
+            color: var(--tech-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .portfolio-title {
+            font-size: 24px;
+            color: #fff;
+            margin: 0;
+        }
+
+        /* --- C-BOT CHAT WIDGET --- */
+        .c-bot-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            /* Offset from WA button */
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--tech-blue), #00ff88);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: pulseBot 2s infinite;
+        }
+
+        .c-bot-btn img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .c-bot-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        @keyframes pulseBot {
+            0% {
+                box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(100, 255, 218, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+            }
+        }
+
+        .c-bot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--tech-blue);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            z-index: 1001;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .c-bot-window.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .c-bot-header {
+            padding: 15px;
+            background: linear-gradient(90deg, var(--tech-blue), #00ff88);
+            color: var(--primary-dark);
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .c-bot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .c-bot-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bot-msg,
+        .user-msg {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .bot-msg {
+            background: rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .user-msg {
+            background: var(--tech-blue);
+            color: var(--primary-dark);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .c-bot-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .bot-opt-btn {
+            background: transparent;
+            border: 1px solid var(--tech-blue);
+            color: var(--tech-blue);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .bot-opt-btn:hover {
+            background: var(--tech-blue);
+            color: var(--primary-dark);
         }
     </style>
 </head>
@@ -1553,6 +2197,7 @@
             <div class="shape shape-3"></div>
             <div class="shape shape-4"></div>
         </div>
+        <div class="retro-grid"></div>
         <div class="hero-overlay"></div>
         <div class="lamp-container">
             <div class="wire"></div>
@@ -1571,9 +2216,11 @@
         <div class="container">
             <div class="hero-content">
                 <p class="hero-subtitle" id="typewriter-text"></p>
-                <h1 class="hero-title">Powering Digital <span class="tech-text">Excellence</span></h1>
-                <p class="hero-desc">Digital Marketing | Development | Design | Enterprise Systems | Automation. We
-                    build the future of your business.</p>
+                <h1 class="hero-title">Powering <span class="hero-underline-glow tech-text">Digital Excellence</span>
+                </h1>
+                <p class="hero-desc" style="font-size: 20px; font-weight: 300;">
+                    We don’t just build digital solutions — we craft experiences that move people.
+                </p>
                 <div class="hero-btns">
                     <a href="contact.html" class="btn btn-filled magnetic-btn">Get a Quote</a>
                     <a href="services.html" class="btn btn-primary magnetic-btn">Explore Services</a>
@@ -1590,52 +2237,82 @@
         </div>
     </section>
 
-    <section class="section-padding" style="background-color: var(--primary-dark);">
-        <div class="container">
+
+    <!-- WHO WE ARE SECTION UPGRADE -->
+    <section class="section-padding who-we-are-section"
+        style="position: relative; overflow: hidden; background: transparent;">
+        <!-- Animated Background -->
+        <div class="who-we-are-bg"></div>
+        <div class="who-we-are-overlay"></div>
+
+        <div class="container" style="position: relative; z-index: 2;">
             <div class="section-header text-center">
-                <h2 class="section-title centered">Who We Are</h2>
+                <h2 class="section-title centered" data-aos="fade-up">Who We Are</h2>
+                <p style="color: var(--text-gray); margin-top: 10px;" data-aos="fade-up" data-aos-delay="100">Story That
+                    Feels Alive</p>
             </div>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p style="color: var(--text-gray); font-size: 18px; margin-bottom: 30px;">
-                    Creatix Innovation is a full-stack IT & Digital agency based in Jaipur. We provide cutting-edge
-                    services in Digital Marketing, Website Development, App Development, and Enterprise Solutions like
-                    HRMS, POS, CRM, and ERP.
+
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <p class="who-we-are-text" data-aos="fade-up" data-aos-delay="200">
+                    Creatix Innovation is a <span class="highlight-word">full-stack</span> IT & Digital agency based in
+                    <span class="highlight-word">Jaipur</span>.
+                    We provide <span class="highlight-word">cutting-edge</span> services in Digital Marketing, Website
+                    Development, App Development,
+                    and <span class="highlight-word">Enterprise Solutions</span> like HRMS, POS, CRM, and ERP.
                 </p>
-                <a href="about.html" class="btn btn-primary">Learn More About Us</a>
+
+                <!-- Animated Icons Grid -->
+                <div class="who-we-are-icons">
+                    <div class="wa-icon-box" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="wa-icon-circle">🎨</div>
+                        <h4>Creativity</h4>
+                    </div>
+                    <div class="wa-icon-box" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="wa-icon-circle">💻</div>
+                        <h4>Technology</h4>
+                    </div>
+                    <div class="wa-icon-box" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="wa-icon-circle">🚀</div>
+                        <h4>Impact</h4>
+                    </div>
+                </div>
+
+                <a href="about.html" class="btn btn-primary magnetic-btn" data-aos="fade-up" data-aos-delay="600">Learn
+                    More About Us</a>
             </div>
         </div>
     </section>
 
-    <section class="section-padding" style="background-color: var(--secondary-dark);">
-        <div class="retro-grid"></div>
-        <div class="container">
+    <section class="section-padding philosophy-section" style="background-color: var(--secondary-dark);">
+        <div class="circuit-bg"></div>
+        <!-- <div class="retro-grid"></div>  Removing retro grid here to avoid clash with circuit -->
+        <div class="container" style="position: relative; z-index: 2;">
             <div class="section-header">
                 <h2 class="section-title">Our Core Philosophy</h2>
             </div>
             <div class="about-grid">
                 <div class="about-content">
-                    <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 16px;">
+                    <p class="reveal-text">
                         At Creatix, innovation isn't just a buzzword—it's the bedrock of our operations. We believe in
                         fusing robust technology with human-centric design to deliver solutions that are not only
-                        powerful
-                        but intuitively easy to use. Our commitment goes beyond delivery; we aim to be long-term
-                        partners,
-                        scaling our technology alongside your growing business ambitions.
+                        powerful but intuitively easy to use.
                     </p>
-                    <p style="color: var(--text-gray); margin-bottom: 30px; font-size: 16px;">
-                        From the bustling tech hub of Jaipur, we serve clients ranging from energetic startups to
-                        established
-                        multinational corporations, providing localized expertise with a global outlook on technology
-                        trends.
+                    <div class="reveal-text quote-highlight">
+                        "Technology should be an extension of human potential, not a barrier."
+                    </div>
+                    <p class="reveal-text">
+                        Our commitment goes beyond delivery; we aim to be long-term partners,
+                        scaling our technology alongside your growing business ambitions. From the bustling tech hub
+                        of Jaipur, we serve clients globally with a localized touch.
                     </p>
-                    <ul class="key-points">
+                    <ul class="key-points reveal-text">
                         <li>Decades of combined experience in full-stack IT services.</li>
                         <li>Customer-first approach to project management and support.</li>
                         <li>Dedicated focus on security, scalability, and performance.</li>
                         <li>Bespoke solutions tailored exactly to industry-specific needs.</li>
                     </ul>
                 </div>
-                <div class="about-image">
+                <div class="about-image" data-aos="fade-left">
                     <img src="visionary-leadership.png" alt="Visionary Leadership">
                 </div>
             </div>
@@ -1648,75 +2325,76 @@
                 "Technology is best when it brings people together."
             </h3>
         </div>
-    </section>
+        <h3>Digital Marketing</h3>
+        <span class="service-tagline">Amplifying Brands</span>
+        <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
 
-    <section class="section-padding" style="background-color: var(--primary-dark);">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our Expertise</h2>
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-development.png" alt="Development">
             </div>
-            <div class="marquee-container">
-                <div class="marquee-track reverse">
-                    <!-- Original Items -->
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-marketing.png" alt="Marketing">
-                        </div>
-                        <h3>Digital Marketing</h3>
-                        <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-development.png" alt="Development">
-                        </div>
-                        <h3>Web & App Dev</h3>
-                        <p>Custom websites and mobile applications built with modern technologies.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-design.png" alt="Design">
-                        </div>
-                        <h3>UI/UX Design</h3>
-                        <p>User-centric design that creates engaging digital experiences.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-enterprise.png" alt="Enterprise">
-                        </div>
-                        <h3>Enterprise Systems</h3>
-                        <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
-                    </div>
-                    <!-- Duplicated Items -->
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-marketing.png" alt="Marketing">
-                        </div>
-                        <h3>Digital Marketing</h3>
-                        <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-development.png" alt="Development">
-                        </div>
-                        <h3>Web & App Dev</h3>
-                        <p>Custom websites and mobile applications built with modern technologies.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-design.png" alt="Design">
-                        </div>
-                        <h3>UI/UX Design</h3>
-                        <p>User-centric design that creates engaging digital experiences.</p>
-                    </div>
-                    <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
-                        <div class="service-icon" style="margin: 0 auto 20px;">
-                            <img src="service-enterprise.png" alt="Enterprise">
-                        </div>
-                        <h3>Enterprise Systems</h3>
-                        <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
-                    </div>
-                </div>
+            <h3>Web & App Dev</h3>
+            <span class="service-tagline">Turning Logic Into Life</span>
+            <p>Custom websites and mobile applications built with modern technologies.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-design.png" alt="Design">
             </div>
+            <h3>UI/UX Design</h3>
+            <span class="service-tagline">Imagination to Interface</span>
+            <p>User-centric design that creates engaging digital experiences.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-enterprise.png" alt="Enterprise">
+            </div>
+            <h3>Enterprise Systems</h3>
+            <span class="service-tagline">Scalable Architecture</span>
+            <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
+        </div>
+        <!-- Duplicated Items -->
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-marketing.png" alt="Marketing">
+            </div>
+            <h3>Digital Marketing</h3>
+            <span class="service-tagline">Amplifying Brands</span>
+            <p>Strategic marketing solutions to boost your brand visibility and ROI.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-development.png" alt="Development">
+            </div>
+            <h3>Web & App Dev</h3>
+            <span class="service-tagline">Turning Logic Into Life</span>
+            <p>Custom websites and mobile applications built with modern technologies.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-design.png" alt="Design">
+            </div>
+            <h3>UI/UX Design</h3>
+            <span class="service-tagline">Imagination to Interface</span>
+            <p>User-centric design that creates engaging digital experiences.</p>
+        </div>
+        <div class="service-card" style="text-align: center;" data-aos="fade-up" data-aos-delay="400">
+
+            <div class="service-icon" style="margin: 0 auto 20px;">
+                <img src="service-enterprise.png" alt="Enterprise">
+            </div>
+            <h3>Enterprise Systems</h3>
+            <span class="service-tagline">Scalable Architecture</span>
+            <p>Comprehensive ERP, CRM, HRMS, and POS solutions for your business.</p>
+        </div>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -1835,6 +2513,80 @@
         </div>
     </section>
 
+    <!-- NEW PORTFOLIO SECTION -->
+    <section class="section-padding" style="background-color: var(--primary-dark);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title centered" data-aos="fade-up">Our Work Speaks Louder</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;" data-aos="fade-up" data-aos-delay="100">A glimpse
+                    into our digital craftsmanship.</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=Fintech+Dashboard" alt="Fintech Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">Fintech</span>
+                        <h3 class="portfolio-title">NeoBank Dashboard</h3>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=E-Commerce+App" alt="E-Commerce Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">Mobile App</span>
+                        <h3 class="portfolio-title">LuxeFashion Store</h3>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=AI+Platform" alt="AI Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">AI / ML</span>
+                        <h3 class="portfolio-title">CogniSense Analytics</h3>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="400">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=Real+Estate+VR" alt="VR Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">Web / VR</span>
+                        <h3 class="portfolio-title">EstateView 360</h3>
+                    </div>
+                </div>
+                <!-- Project 5 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="500">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=Healthcare+Portal"
+                        alt="Healthcare Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">Web Application</span>
+                        <h3 class="portfolio-title">MediConnect Portal</h3>
+                    </div>
+                </div>
+                <!-- Project 6 -->
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="600">
+                    <img src="https://placehold.co/600x400/112240/64ffda?text=Corporate+Identity"
+                        alt="Branding Project">
+                    <video class="portfolio-video" src="video.mp4" muted loop playsinline></video>
+                    <div class="portfolio-overlay">
+                        <span class="portfolio-cat">Branding</span>
+                        <h3 class="portfolio-title">AlphaOne Identity</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 50px;">
+                <a href="portfolio.html" class="btn btn-primary magnetic-btn">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
     <section class="section-padding-sm" style="background-color: var(--primary-dark);">
         <div class="container">
             <div class="section-header text-center" style="margin-bottom: 0;">
@@ -1849,14 +2601,17 @@
         <div class="container">
             <div class="section-header text-center">
                 <h2 class="section-title centered">The Creatix Innovation Process</h2>
-                <p style="color: var(--text-gray); margin-top: 15px;">A proven path to digital success in five phases.
-                </p>
+                <p style="color: var(--text-gray); margin-top: 15px;">Make it Cinematic. A flow that moves.</p>
             </div>
             <div class="process-steps">
+                <div class="process-connecting-line">
+                    <div class="process-line-progress"></div>
+                </div>
+
                 <div class="process-step">
                     <div class="step-number">01</div>
                     <div class="step-content">
-                        <h3>Discovery & Strategy</h3>
+                        <h3><span class="process-icon">⚙️</span> Discovery & Strategy</h3>
                         <p>We begin with intensive workshops to understand your challenges, goals, and existing
                             ecosystem. We define the project scope, technical requirements, and strategic roadmap.</p>
                     </div>
@@ -1864,7 +2619,7 @@
                 <div class="process-step">
                     <div class="step-number">02</div>
                     <div class="step-content">
-                        <h3>Design & Prototyping</h3>
+                        <h3><span class="process-icon">💡</span> Design & Prototyping</h3>
                         <p>Our UX/UI experts create wireframes and high-fidelity prototypes. This phase focuses on user
                             journeys, accessibility, and visual aesthetics, ensuring the final product is intuitive.</p>
                     </div>
@@ -1872,7 +2627,7 @@
                 <div class="process-step">
                     <div class="step-number">03</div>
                     <div class="step-content">
-                        <h3>Development & Testing</h3>
+                        <h3><span class="process-icon">💻</span> Development & Testing</h3>
                         <p>Agile teams build the solution using best-in-class technologies. Continuous integration and
                             rigorous QA testing cycles ensure a stable, high-performance, and bug-free application.</p>
                     </div>
@@ -1880,7 +2635,7 @@
                 <div class="process-step">
                     <div class="step-number">04</div>
                     <div class="step-content">
-                        <h3>Deployment & Launch</h3>
+                        <h3><span class="process-icon">🚀</span> Deployment & Launch</h3>
                         <p>We handle the smooth transition to production, including cloud setup, data migration, and
                             staff training, culminating in a successful, on-time market launch.</p>
                     </div>
@@ -1888,7 +2643,7 @@
                 <div class="process-step">
                     <div class="step-number">05</div>
                     <div class="step-content">
-                        <h3>Support & Evolution</h3>
+                        <h3><span class="process-icon">🛡️</span> Support & Evolution</h3>
                         <p>Post-launch, we provide continuous monitoring, maintenance, and ongoing support. We partner
                             with you to plan future enhancements and feature additions based on performance data.</p>
                     </div>
@@ -1901,40 +2656,51 @@
         <div class="container">
             <div class="section-header text-center">
                 <h2 class="section-title centered">Our Journey of Growth</h2>
-                <p style="color: var(--text-gray); margin-top: 15px;">A look at key milestones since our inception.</p>
+                <p style="color: var(--text-gray); margin-top: 15px;">A legacy of innovation. Drag to explore.</p>
             </div>
-            <div class="timeline-container">
-                <div class="timeline-event left-event">
-                    <div class="timeline-content">
-                        <h4>2015: Founding Year</h4>
+
+            <div class="timeline-drag-hint">← Drag or Scroll →</div>
+
+            <div class="timeline-wrapper" id="horizontalScroll">
+                <div class="timeline-track">
+                    <div class="timeline-card">
+                        <span class="timeline-icon">🚀</span>
+                        <div class="timeline-year">2015</div>
+                        <h4>Founding Year</h4>
                         <p>Creatix Innovation established in Jaipur focusing initially on custom Web Development.</p>
                     </div>
-                </div>
-                <div class="timeline-event right-event">
-                    <div class="timeline-content">
-                        <h4>2017: Digital Expansion</h4>
+                    <div class="timeline-card">
+                        <span class="timeline-icon">📈</span>
+                        <div class="timeline-year">2017</div>
+                        <h4>Digital Expansion</h4>
                         <p>Launched dedicated Digital Marketing and SEO services, securing first major international
                             client.</p>
                     </div>
-                </div>
-                <div class="timeline-event left-event">
-                    <div class="timeline-content">
-                        <h4>2019: Enterprise Focus</h4>
-                        <p>Pivoted to include Enterprise Solutions (ERP/CRM), delivering a large-scale HRMS for a
-                            client in Mumbai.</p>
+                    <div class="timeline-card">
+                        <span class="timeline-icon">🏢</span>
+                        <div class="timeline-year">2019</div>
+                        <h4>Enterprise Focus</h4>
+                        <p>Pivoted to include Enterprise Solutions (ERP/CRM), delivering a large-scale HRMS in Mumbai.
+                        </p>
                     </div>
-                </div>
-                <div class="timeline-event right-event">
-                    <div class="timeline-content">
-                        <h4>2021: Global Footprint</h4>
+                    <div class="timeline-card">
+                        <span class="timeline-icon">🌍</span>
+                        <div class="timeline-year">2021</div>
+                        <h4>Global Footprint</h4>
                         <p>Expanded client base across 3 continents and doubled our internal engineering team.</p>
                     </div>
-                </div>
-                <div class="timeline-event left-event">
-                    <div class="timeline-content">
-                        <h4>2023: AI Integration</h4>
-                        <p>Integrated AI/ML capabilities into our service offerings, completing our first major RPA
-                            project.</p>
+                    <div class="timeline-card">
+                        <span class="timeline-icon">🤖</span>
+                        <div class="timeline-year">2023</div>
+                        <h4>AI Integration</h4>
+                        <p>Integrated AI/ML capabilities into our service offerings, completing first major RPA project.
+                        </p>
+                    </div>
+                    <div class="timeline-card">
+                        <span class="timeline-icon">🔮</span>
+                        <div class="timeline-year">2025</div>
+                        <h4>Next Level</h4>
+                        <p>Launching advanced proprietary automated tools and expanding to the Metaverse.</p>
                     </div>
                 </div>
             </div>
@@ -2075,10 +2841,40 @@
     <section class="section-padding" style="background-color: var(--primary-dark);">
         <div class="container">
             <div class="section-header text-center">
-                <h2 class="section-title centered">Global Partners & Clients</h2>
-                <p style="color: var(--text-gray); margin-top: 15px;">Working with the best across industries.</p>
+                <h2 class="section-title centered">Global Trust & Partners</h2>
+                <p style="color: var(--text-gray); margin-top: 15px;">Delivering excellence across borders.</p>
             </div>
-            <div class="marquee-container">
+
+            <div class="world-map-container" data-aos="fade-in">
+                <!-- If you add world-map-dotted.png to root, it will show. otherwise circles float -->
+                <div class="map-hotspot spot-usa">
+                    <div class="map-tooltip">
+                        <strong>USA</strong><br>3 Enterprise Clients
+                    </div>
+                </div>
+                <div class="map-hotspot spot-uk">
+                    <div class="map-tooltip">
+                        <strong>UK</strong><br>Fintech Solutions
+                    </div>
+                </div>
+                <div class="map-hotspot spot-uae">
+                    <div class="map-tooltip">
+                        <strong>UAE</strong><br>Retail POS Systems
+                    </div>
+                </div>
+                <div class="map-hotspot spot-india">
+                    <div class="map-tooltip">
+                        <strong>India (HQ)</strong><br>Innovation Hub
+                    </div>
+                </div>
+                <div class="map-hotspot spot-aus">
+                    <div class="map-tooltip">
+                        <strong>Australia</strong><br>EdTech Platform
+                    </div>
+                </div>
+            </div>
+
+            <div class="marquee-container" style="margin-top: 50px;">
                 <div class="marquee-track">
                     <!-- Original Items -->
                     <div class="client-logo-box">
@@ -2213,6 +3009,26 @@
                 d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.968.585 2.032.896 3.072.896 3.179 0 5.764-2.587 5.763-5.766.001-3.18-2.585-5.762-5.764-5.762zm3.99 7.945c-.166.476-.971.897-1.329.954-.358.057-.823.14-2.93-.77-2.517-1.088-4.131-4.184-4.258-4.377-.127-.193-1.015-1.353-.97-2.57.045-1.217.634-1.81.862-2.056.229-.246.496-.307.662-.307.166 0 .333.005.479.012.158.007.369-.06.575.436.215.515.736 1.797.802 1.929.065.132.109.288.016.476-.093.188-.14.305-.279.467-.14.161-.293.359-.419.48-.141.135-.288.283-.124.567.163.285.727 1.198 1.564 1.943 1.086.966 2.002 1.268 2.29 1.412.288.144.454.125.624-.064.17-.19.736-.854.932-1.146.196-.293.391-.244.656-.146.265.097 1.689.796 1.98.942.291.146.485.243.638.36.153.117.153.684.065 1.129-.432 1.293z" />
         </svg>
     </a>
+
+    <!-- C-BOT WIDGET -->
+    <div class="c-bot-btn" onclick="toggleBot()">
+        <img src="https://img.icons8.com/fluency/96/bot.png" alt="Chatbot">
+    </div>
+
+    <div class="c-bot-window" id="cBotWindow">
+        <div class="c-bot-header">
+            <span>C-Bot Assistant</span>
+            <span class="c-bot-close" onclick="toggleBot()">×</span>
+        </div>
+        <div class="c-bot-body" id="cBotBody">
+            <div class="bot-msg">Beep Boop! 🤖 Welcome to Creatix. I'm C-Bot. How can I help you sparkle today?</div>
+            <div class="c-bot-options">
+                <button class="bot-opt-btn" onclick="botReply('quote')">Get a Quote</button>
+                <button class="bot-opt-btn" onclick="botReply('services')">Explore Services</button>
+                <button class="bot-opt-btn" onclick="botReply('contact')">Just say Hi</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
@@ -2499,6 +3315,168 @@
                 }, 800);
             }
         });
+
+        // --- PROCESS SCROLL EFFECT ---
+        const processSteps = document.querySelectorAll('.process-step');
+        const processProgress = document.querySelector('.process-line-progress');
+        const processSection = document.querySelector('.process-steps');
+
+        if (processSection) {
+            window.addEventListener('scroll', () => {
+                const triggerBottom = window.innerHeight * 0.8;
+                const sectionTop = processSection.getBoundingClientRect().top;
+                const sectionHeight = processSection.offsetHeight;
+
+                // Calculate progress based on scroll relative to section
+                let progress = (window.innerHeight / 2 - sectionTop) / sectionHeight;
+                progress = Math.max(0, Math.min(progress, 1));
+                processProgress.style.height = (progress * 100) + '%';
+
+                processSteps.forEach(step => {
+                    const boxTop = step.getBoundingClientRect().top;
+                    if (boxTop < triggerBottom) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // --- HORIZONTAL SCROLL VIA MOUSE WHEEL ---
+        const scrollContainer = document.getElementById("horizontalScroll");
+        if (scrollContainer) {
+            scrollContainer.addEventListener("wheel", (evt) => {
+                evt.preventDefault();
+                scrollContainer.scrollLeft += evt.deltaY;
+            });
+
+            // Drag to scroll functionality
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            scrollContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                scrollContainer.classList.add('active'); // Optional: change cursor
+                startX = e.pageX - scrollContainer.offsetLeft;
+                scrollLeft = scrollContainer.scrollLeft;
+            });
+            scrollContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            scrollContainer.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            scrollContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - scrollContainer.offsetLeft;
+                const walk = (x - startX) * 2; //scroll-fast
+                scrollContainer.scrollLeft = scrollLeft - walk;
+            });
+        }
+
+        // --- VIDEO HOVER TRIGGER ---
+        document.querySelectorAll('.service-card').forEach(card => {
+            const video = card.querySelector('video');
+            if (video) {
+                card.addEventListener('mouseenter', () => video.play());
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            }
+        });
+
+        // --- TEXT REVEAL ON SCROLL ---
+        const revealObserverOptions = {
+            threshold: 0.2
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, revealObserverOptions);
+
+        document.querySelectorAll('.reveal-text').forEach(el => revealObserver.observe(el));
+
+        /* --- C-BOT LOGIC --- */
+        function toggleBot() {
+            document.getElementById('cBotWindow').classList.toggle('active');
+        }
+
+        function botReply(choice) {
+            const chatBody = document.getElementById('cBotBody');
+
+            // Remove options
+            const options = chatBody.querySelector('.c-bot-options');
+            if (options) options.remove();
+
+            // User Reply Visual
+            let userText = "";
+            let msgType = ""; // For logic handling
+
+            if (choice === 'quote') { userText = "I need a quote."; msgType = 'quote'; }
+            else if (choice === 'services') { userText = "Show me services."; msgType = 'services'; }
+            else if (choice === 'contact') { userText = "Just saying Hi!"; msgType = 'contact'; }
+            else if (choice === 'web') { userText = "Web Development"; msgType = 'web'; }
+            else if (choice === 'app') { userText = "Mobile App"; msgType = 'app'; }
+            else if (choice === 'marketing') { userText = "Digital Marketing"; msgType = 'marketing'; }
+            else if (choice.includes('budget')) {
+                if (choice === 'budget_low') userText = "$1k - $5k";
+                if (choice === 'budget_mid') userText = "$5k - $15k";
+                if (choice === 'budget_high') userText = "$15k+";
+                msgType = 'final';
+            }
+
+            chatBody.innerHTML += `<div class="user-msg">${userText}</div>`;
+
+            // Simulate Typing
+            setTimeout(() => {
+                let botText = "";
+                let nextOptions = "";
+
+                if (msgType === 'quote') {
+                    botText = "Awesome! What kind of project are we talking about?";
+                    nextOptions = `
+                        <div class="c-bot-options">
+                            <button class="bot-opt-btn" onclick="botReply('web')">Web Dev</button>
+                            <button class="bot-opt-btn" onclick="botReply('app')">Mobile App</button>
+                            <button class="bot-opt-btn" onclick="botReply('marketing')">Marketing</button>
+                        </div>
+                    `;
+                } else if (msgType === 'services') {
+                    botText = "We do it all! Web, App, AI, and Marketing. Check our Services page for the full scoop.";
+                    nextOptions = `<div class="c-bot-options"><a href="services.html" class="bot-opt-btn">Go to Services</a></div>`;
+                } else if (msgType === 'contact') {
+                    botText = "Hello there! 👋 Feel free to look around or drop us a message if you need anything.";
+                }
+
+                if (msgType === 'web' || msgType === 'app' || msgType === 'marketing') {
+                    botText = "Got it. And what's your estimated budget?";
+                    nextOptions = `
+                        <div class="c-bot-options">
+                            <button class="bot-opt-btn" onclick="botReply('budget_low')">$1k - $5k</button>
+                            <button class="bot-opt-btn" onclick="botReply('budget_mid')">$5k - $15k</button>
+                            <button class="bot-opt-btn" onclick="botReply('budget_high')">$15k+</button>
+                        </div>
+                    `;
+                }
+
+                if (msgType === 'final') {
+                    botText = "Perfect. I've noted that down. Please fill our contact form to finalize the details!";
+                    nextOptions = `<div class="c-bot-options"><a href="contact.html" class="bot-opt-btn">Go to Contact Form</a></div>`;
+                }
+
+                chatBody.innerHTML += `<div class="bot-msg">${botText}</div>${nextOptions}`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
     </script>
 </body>
 
